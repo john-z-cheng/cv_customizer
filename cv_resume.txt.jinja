@@ -1,0 +1,218 @@
+{# templates/cv_resume.txt #}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HTML Resume</title>
+<style>
+body {
+    color: #000000;
+    background: #EEEEEE;
+    font: 1em "Times New Roman";
+    line-height: 1;
+    margin: 40px 0;
+}
+#resume {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 40px 60px;
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: 2px 2px 4px #AAAAAA;
+    -webkit-box-shadow: 2px 2px 4px #AAAAAA;
+}
+.cv_basics_column {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.cv_name {
+    text-transform: uppercase;
+    font-size: 150%;
+    font-weight: bold;
+}
+.cv_location {
+    font-size: 125%;
+    font-weight: normal;
+}
+.cv_label {
+    font-size: 150%;
+    font-weight: bold;   
+}
+.cv_basics_row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.cv_phone {
+    font-size:125%;
+}
+.cv_email {
+    font-size:125%;
+}
+.cv_summary {
+    margin-top: 1em;
+}
+.cv_stint_heading {
+    display: flex;
+    margin-top: 0.5em;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    column-gap: 15px;
+}
+.cv_stint_period {
+    font-size: 100%;
+}
+.cv_left_item {
+    margin-left: auto;
+}
+.cv_org_name {
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.cv_position {
+    font-style: italic;
+}
+.cv_stint_description {
+    display: inline;
+}
+section {
+    /* border-bottom: 1px solid #000000; */
+    text-transform: uppercase;
+    text-decoration: underline;
+    font-size: 130%;
+    font-weight: bold;
+    margin: 1em 0 0em 0;
+    padding: 0;
+}
+p {
+    margin: 0 0 0.5em 0;
+    padding: 0;
+    }
+ul {
+    padding: 0;
+    margin: 0 1.5em;
+    }
+
+@media print {
+    body {
+        font-size: 10pt;
+        margin: 0;
+        padding: 0;
+        background: none;
+    }
+    #resume {
+        margin: 0;
+        padding: 0;
+        border: 0px;
+        background: none;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+    /* Make links black in PDF */
+    /* Move this outside the print block to apply this in HTML too */
+    a, a:link, a:visited, a:hover {
+        color: #000000;
+        text-decoration: underline;
+    }
+}
+@page {
+    /* Change margins and paper size of PDF */
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/@page */
+    size: letter;
+    margin: 0.5in 0.8in;
+}
+@media screen and (max-width: 800px) {
+    body {
+        font-size: 16pt;
+        margin: 0;
+        padding: 0;
+        background: #FFFFFF !important;
+    }
+    #resume {
+        margin: 0;
+        padding: 1em;
+        border: 0px;
+        background: none;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+}
+
+</style>
+</head>
+<body>
+<div id="resume">
+<div class="cv_basics_column">
+<div class="cv_basics cv_name">{{ basics.name }}</div>
+<div class="cv_basics cv_location">{{ basics.location.city }}, {{basics.location.region}}</div>
+</div>
+<div class="cv_basics_row">
+    <div class="cv_basics cv_email">{{ basics.email }}</div>
+    <div class="cv_separator">&nbsp;&bullet;&nbsp;</div>
+    <div class="cv_basics cv_phone">{{ basics.phone }}</div>
+</div>
+<!-- div class="cv_summary">{{ basics.summary }}</div -->
+<section>Experience</section>
+{% for stint in work %}
+<div class="cv_stint_heading">
+<div class="cv_stint_item cv_org_name">{{ stint.name }}</div>
+<div class="cv_stint_item cv_org_city">{{ stint.location }}</div>
+<div class="cv_left_item cv_stint_period">{{ stint.startDate }} &ndash; {{ stint.endDate }}</div>
+</div>
+<div class="cv_position">{{ stint.position }}</div>
+<div class="cv_stint_description">{{ stint.summary }}</div>
+<ul>
+{% for item in stint.highlights %}
+{% if item.highlight is defined %}
+<li>{{ item.highlight }}</li>
+    {% if item.subhighlights is defined %}
+    <ul>{% for subhighlight in item.subhighlights %}
+    <li>{{ subhighlight }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+{% else %}
+<li>{{ item }}</li>
+{% endif %}
+{% endfor %}
+</ul>
+{% endfor %}
+<section>Volunteer</section>
+{% for stint in volunteer %}
+<div class="cv_stint_heading">
+    <div class="cv_stint_item cv_org_name">{{ stint.organization }}</div>
+    <div class="cv_left_item cv_stint_period">{{ stint.startDate }} &ndash; {{ stint.endDate }}</div>
+</div>
+<div class="cv_stint_description">{{stint.summary}}</div>
+<ul>
+{% for item in stint.highlights %}
+<li>{{ item }}</li>
+{% endfor %}
+</ul>
+{% endfor %}
+<section>Education</section>
+{% for stint in education %}
+<div class="cv_stint_heading">
+<div class="cv_stint_item cv_org_name">{{ stint.institution }}</div>
+<div class="cv_stint_item cv_org_location">{{ stint.location }}</div>
+<div class="cv_stint_item">{{ stint.degreeText }}</div>
+</div>
+{% endfor %}
+<section>Skills</section>
+<div class="cv_stint_heading"></div>
+<ul>
+{% for skill in skills %}
+<li><b>{{ skill.name }}</b>:
+{% for keyword in skill.keywords %}
+{{ keyword }}{{ ", " if not loop.last else "" }}
+{% endfor %}
+</li>
+{% endfor %}
+</ul>
+</div>
+</body>
+</html>
+

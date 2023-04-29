@@ -1,0 +1,154 @@
+{
+  "basics": {
+    "name": "First Last",
+    "label": "Programmer",
+    "image": "",
+    "email": "first.last@gmail.com",
+    "phone": "(912) 555-1234",
+    "url": "https://firstlast.com",
+    "summary": "A summary for First Last...",
+    "location": {
+      "address": "2712 Broadway St",
+      "postalCode": "CA 94115",
+      "city": "City",
+      "countryCode": "US",
+      "region": "State"
+    },
+    "profiles": [{
+      "network": "Twitter",
+      "username": "anon",
+      "url": "https://twitter.com/anon"
+    }]
+  },
+  "work": [{
+    "name": "Company 1",
+    "location":"City, ST",
+    "position": "President",
+    "url": "https://company.com",
+    "startDate": "Jan 2018",
+    "endDate": "present",
+    "summaryX": "large enterprise focused on providing anonymous services",
+    "highlights": [
+      "At the company"
+    ]
+  },{
+    "name": "Company 2",
+    "location":"City, ST",
+    "position": "Vice President",
+    "url": "https://company.com",
+    "startDate": "Jan 2014",
+    "endDate": "Dec 2017",
+    "summaryX": "Medium size company",
+    "highlights": [
+      "Started the company","Hated the company"
+    ]
+  },{
+    "name": "Company 3",
+    "location":"City, ST",
+    "position": "Peon",
+    "url": "https://company.com",
+    "startDate": "May 2012",
+    "endDate": "Dec 2013",
+    "summary": "Startup company",
+    "highlights": [
+      "Liked the company"
+    ]
+  }],
+  "volunteer": [{
+    "organization": "Plot Against Anonymity",
+    "position": "Volunteer",
+    "url": "https://organization.com/",
+    "startDate": "Mar 2022",
+    "endDate": "present",
+    "summary": "Non-profit that anonymizes personalities",
+    "highlights": [
+      "Replace descriptions of characteristics",
+      "Export new fake data"
+    ]
+  }],
+  "education": [{
+    "institution": "University of State",
+    "location": "City, ST",
+    "url": "https://institution.com/",
+    "area": "Software Development",
+    "studyType": "Bachelor",
+    "startDate": "2011-01-01",
+    "endDate": "2013-01-01",
+    "degreeText": "BS Engineering with High Honors",
+    "score": "4.0",
+    "courses": [
+      "DB101 - Basic SQL"
+    ]
+  }],
+  "awards": [{
+    "title": "Award",
+    "date": "2014-11-01",
+    "awarder": "Company",
+    "summary": "There is no spoon."
+  }],
+  "certificates": [{
+    "name": "Certificate",
+    "date": "2021-11-07",
+    "issuer": "Company",
+    "url": "https://certificate.com"
+  }],
+  "publications": [{
+    "name": "Publication",
+    "publisher": "Company",
+    "releaseDate": "2014-10-01",
+    "url": "https://publication.com",
+    "summary": "Description…"
+  }],
+  "skills": [{
+    "name": "Web Development",
+    "level": "Master",
+    "keywords": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ]},
+    {
+    "name": "Compression",
+    "level": "Master",
+    "keywords": [
+      "mpeg",
+      "<b>mp4</b>",
+      "gif"
+    ]}
+    ],
+  "languages": [{
+    "language": "English",
+    "fluency": "Native speaker"
+  }],
+  "interests": [{
+    "name": "Wildlife",
+    "keywords": [
+      "Ferrets",
+      "Unicorns"
+    ]
+  }],
+  "references": [{
+    "name": "Jane Doe",
+    "reference": "Reference…"
+  }],
+  "projects": [{
+    "name": "Project",
+    "description": "Description…",
+    "highlights": [
+      "Won award at AIHacks 2016",
+      "Built by all women team of newbie programmers",
+      "Using modern technologies such as GoogleMaps, Chrome Extension and Javascript"
+    ],
+    "keywords": [
+      "HTML"
+    ],
+    "startDate": "Oct 2019",
+    "endDate": "Jun 2021",
+    "url": "https://project.com/",
+    "roles": [
+      "Team Lead"
+    ],
+    "entity": "Entity",
+    "type": "application"
+  }]
+}
