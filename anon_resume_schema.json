@@ -142,20 +142,18 @@
     "name": "Compression",
     "level": "Master",
     "keywords": [
-      "mpeg",
-      "<b>mp4</b>",
-      "gif"
+      "mpeg","mp4","gif"
     ]},
     {"name": "Lorem Ipsum",
     "level": "Master",
     "keywords": [
-      "Aliquam interdum","elit sed est eleifend","eget sodales dui aliquam","Pellentesque bibendu","lectus vel ipsum scelerisque","<b>quis</b> aliquet augue tristique"
+      "Aliquam interdum","elit sed est eleifend","eget sodales dui aliquam","Pellentesque bibendu","lectus vel ipsum scelerisque","quis aliquet augue tristique"
     ]},
     {"name": "Ipsum Lorem",
     "level": "Master",
     "keywords": [
       "Phasellus sollicitudin","ac enim semper","sed sodales justo aliquet",
-      "<b>interdum</b>","lit sed est eleifend","eget sodales dui aliquam","Pellentesque <b>bibendum</b>","lectus vel ipsum scelerisque","quis aliquet augue tristique"
+      "interdum","lit sed est eleifend","eget sodales dui aliquam","Pellentesque bibendum","lectus vel ipsum scelerisque","quis aliquet augue tristique"
     ]}
     ],
   "languages": [{
