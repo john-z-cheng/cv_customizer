@@ -71,12 +71,34 @@ body {
     font-size: 100%;
     font-weight: bold;
 }
-
 .cv_position {
     font-style: italic;
 }
 .cv_stint_description {
     display: inline;
+}
+.cv_education_degree {
+    display: inline;
+}
+.cv_skills {
+    margin-top: 0.5em;
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+}
+.cv_skill_category {
+    float: left;
+    width: 25%;
+    font-weight: bold;
+    padding: 0;
+    margin: 0
+}
+.cv_skill_items {
+    float: left;
+    width: 75%;
+    font-weight: normal;
+    padding: 0;
+    margin: 0
 }
 section {
     /* border-bottom: 1px solid #000000; */
@@ -154,7 +176,7 @@ ul {
     <div class="cv_separator">&nbsp;&bullet;&nbsp;</div>
     <div class="cv_basics cv_phone">{{ basics.phone }}</div>
 </div>
-<!-- div class="cv_summary">{{ basics.summary }}</div -->
+<div class="cv_summary">{{ basics.summary }}</div>
 <section>Experience</section>
 {% for stint in work %}
 <div class="cv_stint_heading">
@@ -198,20 +220,19 @@ ul {
 <div class="cv_stint_heading">
 <div class="cv_stint_item cv_org_name">{{ stint.institution }}</div>
 <div class="cv_stint_item cv_org_location">{{ stint.location }}</div>
-<div class="cv_stint_item">{{ stint.degreeText }}</div>
 </div>
+<div class="cv_education_degree">{{ stint.degreeText }}</div>
 {% endfor %}
 <section>Skills</section>
-<div class="cv_stint_heading"></div>
-<ul>
+<dl class="cv_skills">
 {% for skill in skills %}
-<li><b>{{ skill.name }}</b>:
+<dt class="cv_skill_category">{{ skill.name }}</dt>
+<dd class="cv_skill_items">
 {% for keyword in skill.keywords %}
 {{ keyword }}{{ ", " if not loop.last else "" }}
+{% endfor %}</dd>
 {% endfor %}
-</li>
-{% endfor %}
-</ul>
+</dl>
 </div>
 </body>
 </html>

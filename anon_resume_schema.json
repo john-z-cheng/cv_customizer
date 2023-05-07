@@ -6,7 +6,7 @@
     "email": "first.last@gmail.com",
     "phone": "(912) 555-1234",
     "url": "https://firstlast.com",
-    "summary": "A summary for First Last...",
+    "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut risus tortor, convallis at risus sed, maximus consequat nibh. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In pulvinar, libero nec efficitur elementum, eros turpis eleifend ligula, sed auctor nulla mi id nulla. Vivamus iaculis odio felis, sed dignissim nisl malesuada at. Donec mauris odio, ultrices et convallis sed, tempus nec nulla. Duis eget metus egestas, facilisis mi eget, hendrerit dolor. Fusce lobortis quis felis eget aliquet. Vestibulum.",
     "location": {
       "address": "2712 Broadway St",
       "postalCode": "CA 94115",
@@ -21,29 +21,46 @@
     }]
   },
   "work": [{
-    "name": "Company 1",
-    "location":"City, ST",
+    "name": "Subsidiary / Morbi",
+    "location":"Major City, ST",
     "position": "President",
     "url": "https://company.com",
     "startDate": "Jan 2018",
-    "endDate": "present",
+    "endDate": "Mar 2022",
     "summaryX": "large enterprise focused on providing anonymous services",
     "highlights": [
-      "At the company"
+      { "highlight" : "Malesuada fames ac turpis egestas integer",
+                      "subhighlights" : ["Pharetra et ultrices neque ornare",
+                      "Maecenas vel odio nulla",
+                      "Sed ut libero venenatis, vehicula mi non, molestie nis",
+                      "Donec in sapien eu tellus porta viverra et id ligula"] },
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Semper quis lectus nulla at volutpat diam. Ac orci phasellus egestas tellus rutrum tellus.",{ "highlight" : "Malesuada fames ac turpis egestas integer",
+      "subhighlights" : ["Pharetra et ultrices neque ornare",
+      "Maecenas vel odio nulla",
+      "Sed ut libero venenatis, vehicula mi non, molestie nis",
+      "Donec in sapien eu tellus porta viverra et id ligula"] },
+      "Elit pellentesque habitant morbi tristique senectus"
     ]
   },{
-    "name": "Company 2",
-    "location":"City, ST",
+    "name": "Division / Ullamcorper",
+    "location":"Minor City, ST",
     "position": "Vice President",
     "url": "https://company.com",
     "startDate": "Jan 2014",
     "endDate": "Dec 2017",
     "summaryX": "Medium size company",
     "highlights": [
-      "Started the company","Hated the company"
+      "Pellentesque aliquam justo nec feugiat lacinia",
+      "Integer ante ex, consequat quis odio quis, viverra mattis risus",
+      { "highlight" : "Malesuada fames ac turpis egestas integer",
+      "subhighlights" : ["Pharetra et ultrices neque ornare",
+      "Maecenas vel odio nulla",
+      "Sed ut libero venenatis, vehicula mi non, molestie nis",
+      "Donec in sapien eu tellus porta viverra et id ligula"] },
+      "Aliquam laoreet ut mi id gravida"
     ]
   },{
-    "name": "Company 3",
+    "name": "Curabitur, Inc.",
     "location":"City, ST",
     "position": "Peon",
     "url": "https://company.com",
@@ -51,7 +68,9 @@
     "endDate": "Dec 2013",
     "summary": "Startup company",
     "highlights": [
-      "Liked the company"
+      "Suspendisse semper libero nec nulla mattis consequat",
+      "Ut eget nisi lobortis, maximus enim quis, accumsan libero.",
+      "Donec a mi lobortis, pharetra felis quis, gravida libero"
     ]
   }],
   "volunteer": [{
@@ -68,18 +87,32 @@
   }],
   "education": [{
     "institution": "University of State",
-    "location": "City, ST",
+    "location": "CollegeTown, ST",
     "url": "https://institution.com/",
     "area": "Software Development",
     "studyType": "Bachelor",
     "startDate": "2011-01-01",
     "endDate": "2013-01-01",
-    "degreeText": "BS Engineering with High Honors",
+    "degreeText": "BS Basket Weaving with High Honors",
     "score": "4.0",
     "courses": [
       "DB101 - Basic SQL"
     ]
-  }],
+  },{
+    "institution": "Community College",
+    "location": "Podunk, ST",
+    "url": "https://institution.com/",
+    "area": "Software Development",
+    "studyType": "Associate",
+    "startDate": "2011-01-01",
+    "endDate": "2013-01-01",
+    "degreeText": "Associates in History",
+    "score": "4.0",
+    "courses": [
+      "DB101 - Basic SQL"
+    ]
+  }
+],
   "awards": [{
     "title": "Award",
     "date": "2014-11-01",
@@ -103,9 +136,7 @@
     "name": "Web Development",
     "level": "Master",
     "keywords": [
-      "HTML",
-      "CSS",
-      "JavaScript"
+      "HTML","CSS","JavaScript","React","Bootstrap","jQuery","Unicorns","Angular","Vue","web socket","XML/XSLT","JSON"
     ]},
     {
     "name": "Compression",
@@ -114,6 +145,17 @@
       "mpeg",
       "<b>mp4</b>",
       "gif"
+    ]},
+    {"name": "Lorem Ipsum",
+    "level": "Master",
+    "keywords": [
+      "Aliquam interdum","elit sed est eleifend","eget sodales dui aliquam","Pellentesque bibendu","lectus vel ipsum scelerisque","<b>quis</b> aliquet augue tristique"
+    ]},
+    {"name": "Ipsum Lorem",
+    "level": "Master",
+    "keywords": [
+      "Phasellus sollicitudin","ac enim semper","sed sodales justo aliquet",
+      "<b>interdum</b>","lit sed est eleifend","eget sodales dui aliquam","Pellentesque <b>bibendum</b>","lectus vel ipsum scelerisque","quis aliquet augue tristique"
     ]}
     ],
   "languages": [{
