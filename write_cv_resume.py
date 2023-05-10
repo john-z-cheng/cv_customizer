@@ -42,37 +42,52 @@ def list_emphasize_keywords(json_attr: str, l: list, keywords: list) -> list:
                 l[i] = replacement
     return l
 
-root = "anon"
-try:
-    root = sys.argv[1]
-except:
-    pass
+def load_resume_data(data_file):
+    with open(file=data_file, mode="r") as data_file:
+        raw_data = json.load(data_file)
+    return raw_data
 
-with open(file="data_for_" + root + ".json", mode="r") as data_file:
-    resume_data = json.load(data_file)
+def load_keywords(k_filename):
+    # keywords_list contains a keyword (or keyword phrase) on each line
+    keywords = []
+    try:
+        with open(file=k_filename, mode="r") as keyword_file:
+            for line in keyword_file:
+                if len(line.strip()): keywords.append(line.strip().casefold())
+    except (OSError):
+        pass
+    print ("Keywords to be emphasized:", keywords)
+    return keywords
 
-# keywords_list contains a keyword (or keyword phrase) on each line
-keywords = []
-try:
-    with open(file="keywords_for_" + root + ".txt", mode="r") as keyword_file:
-        for line in keyword_file:
-            if len(line.strip()): keywords.append(line.strip().casefold())
-except (OSError):
-    pass
-print ("Keywords to be emphasized:", keywords)
+def write_resume(resume_data, html_filename):
+    environment = Environment(loader=FileSystemLoader("."))
+    template = environment.get_template("cv_resume.txt.jinja")
 
-# emphasize keywords in resume_data
-output = dict_emphasize_keywords(resume_data, keywords)
+    content = template.render(resume_data)
+    with open(html_filename, mode="w", encoding="utf-8") as message:
+        environment.parse(template)
+        message.write(content)
+        print(f"... wrote {html_filename}")
 
+def define_filenames()
+    root = "anon"
+    try:
+        root = sys.argv[1]
+    except:
+        pass
+    d_file = "data_for_" + root + ".json"
+    k_file = "keywords_for_" + root + ".txt"
+    h_file = root + "_resume.html"
+    filenames = (d_file, k_file, h_file)
+    print (filenames)
+    return filenames
 
-# print (resume_data)
-environment = Environment(loader=FileSystemLoader("."))
-template = environment.get_template("cv_resume.txt.jinja")
+def main():
+    d_file, k_file, h_file = define_filenames()
+    raw_data = load_resume_data(d_file)
+    keywords = load_keywords(k_file)
+    resume_data = dict_emphasize_keywords(raw_data, keywords)
+    write_resume(resume_data, h_file)
 
-content = template.render(resume_data)
-
-filename = root + "_resume.html"
-with open(filename, mode="w", encoding="utf-8") as message:
-    environment.parse(template)
-    message.write(content)
-    print(f"... wrote {filename}")
+if __name__ == "__main__":
+    main()
