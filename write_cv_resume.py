@@ -69,7 +69,7 @@ def write_resume(resume_data, html_filename):
         message.write(content)
         print(f"... wrote {html_filename}")
 
-def define_filenames()
+def define_filenames():
     root = "anon"
     try:
         root = sys.argv[1]
