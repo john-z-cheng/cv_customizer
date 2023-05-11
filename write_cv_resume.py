@@ -6,7 +6,10 @@ from jinja2 import Environment, FileSystemLoader
 
 def emphasize_any_keywords(v: str, keywords: list):
     replacement = ''
+    match_qty = 0
     for keyword in keywords:
+        if match_qty:
+            print('replacement: ',v)
         regex = rf"\b{keyword}\b"
         # keywords have already been casefolded but the value has not
         p = re.compile(regex, re.IGNORECASE)
@@ -14,6 +17,7 @@ def emphasize_any_keywords(v: str, keywords: list):
         left_idx = 0
         found = False
         for match in matches:
+            match_qty += 1
             found = True
             right_idx = match.start()
             part_str = v[left_idx:right_idx] + '<b>'
@@ -24,10 +28,15 @@ def emphasize_any_keywords(v: str, keywords: list):
         # if a match was detected, then include remainder of the value
         if found and left_idx < len(v):
             replacement = replacement + v[left_idx:]
-            print(replacement)
-            break
-            # TODO handle the case where two keywords are in a long string,
-    return replacement
+        # next keyword search should use modified replacement
+        if found:
+            v = replacement
+            replacement = ''
+    # return the last modified replacement
+    if match_qty:
+        return v
+    else:
+        return ''
 
 def dict_emphasize_keywords(d: dict, keywords: list) -> dict:
     for k, v in d.items():
