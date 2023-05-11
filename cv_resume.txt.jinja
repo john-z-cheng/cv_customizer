@@ -173,8 +173,10 @@ ul {
 </div>
 <div class="cv_basics_row">
     <div class="cv_basics cv_email">{{ basics.email }}</div>
+    {% if basics.phone|length %}
     <div class="cv_separator">&nbsp;&bullet;&nbsp;</div>
     <div class="cv_basics cv_phone">{{ basics.phone }}</div>
+    {% endif %}
 </div>
 <div class="cv_summary">{{ basics.summary }}</div>
 <section>Experience</section>
