@@ -1,4 +1,5 @@
 # write_cv_resume.py
+import re
 import sys
 import json
 from jinja2 import Environment, FileSystemLoader
@@ -6,11 +7,26 @@ from jinja2 import Environment, FileSystemLoader
 def emphasize_any_keywords(v: str, keywords: list):
     replacement = ''
     for keyword in keywords:
-        # TODO find the keyword inside a longer string of words
-        # but for now, just compare as if it was a single word
-        if v.casefold() == keyword:
-            replacement = '<b>' + v + '</b>'
+        regex = rf"\b{keyword}\b"
+        # keywords have already been casefolded but the value has not
+        p = re.compile(regex, re.IGNORECASE)
+        matches = p.finditer(v)
+        left_idx = 0
+        found = False
+        for match in matches:
+            found = True
+            right_idx = match.start()
+            part_str = v[left_idx:right_idx] + '<b>'
+            replacement = replacement + part_str
+            part_str = v[right_idx:match.end()] + '</b>'
+            replacement = replacement + part_str
+            left_idx = match.end()
+        # if a match was detected, then include remainder of the value
+        if found and left_idx < len(v):
+            replacement = replacement + v[left_idx:]
             print(replacement)
+            break
+            # TODO handle the case where two keywords are in a long string,
     return replacement
 
 def dict_emphasize_keywords(d: dict, keywords: list) -> dict:
