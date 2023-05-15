@@ -204,6 +204,7 @@ ul {
 {% endfor %}
 </ul>
 {% endfor %}
+{% if volunteer is defined %}
 <section>Volunteer</section>
 {% for stint in volunteer %}
 <div class="cv_stint_heading">
@@ -217,6 +218,7 @@ ul {
 {% endfor %}
 </ul>
 {% endfor %}
+{% endif %}
 <section>Education</section>
 {% for stint in education %}
 <div class="cv_stint_heading">
