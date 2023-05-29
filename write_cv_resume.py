@@ -1,15 +1,18 @@
+
 # write_cv_resume.py
 import re
 import sys
 import json
 from jinja2 import Environment, FileSystemLoader
 
+emphasized_attributes = ['summary','highlights','highlight','subhighlights','keywords']
+
 def emphasize_any_keywords(v: str, keywords: list):
     replacement = ''
     match_qty = 0
     for keyword in keywords:
         if match_qty:
-            print('replacement: ',v)
+            pass
         regex = rf"\b{keyword}\b"
         # keywords have already been casefolded but the value has not
         p = re.compile(regex, re.IGNORECASE)
@@ -31,6 +34,7 @@ def emphasize_any_keywords(v: str, keywords: list):
         # next keyword search should use modified replacement
         if found:
             v = replacement
+            print('replacement: ',v)
             replacement = ''
     # return the last modified replacement
     if match_qty:
@@ -46,7 +50,7 @@ def dict_emphasize_keywords(d: dict, keywords: list) -> dict:
             v = list_emphasize_keywords(k, v, keywords)
         elif isinstance(v, str):
             # do not emphasize keywords that are not in these json attributes
-            if k not in ['summary','highlight','subhighlights','keywords']:
+            if k not in emphasized_attributes:
                 continue
             replacement = emphasize_any_keywords(v, keywords)
             if len(replacement):
@@ -60,7 +64,7 @@ def list_emphasize_keywords(json_attr: str, l: list, keywords: list) -> list:
         elif isinstance(e, dict):
             e = dict_emphasize_keywords(e, keywords)
         elif isinstance(e, str):
-            if json_attr not in ['summary','highlight','subhighlights','keywords']:
+            if json_attr not in emphasized_attributes:
                 continue
             replacement = emphasize_any_keywords(e, keywords)
             if len(replacement):
@@ -96,12 +100,17 @@ def write_resume(resume_data, html_filename):
 
 def define_filenames():
     root = "anon"
-    try:
+    argc = len(sys.argv)
+    print (argc)
+    if argc > 1:
         root = sys.argv[1]
-    except:
-        pass
+    if argc == 3:
+        kroot = sys.argv[2]
+    else:
+        kroot = root
+
     d_file = "data_for_" + root + ".json"
-    k_file = "keywords_for_" + root + ".txt"
+    k_file = "keywords_for_" + kroot + ".txt"
     h_file = root + "_resume.html"
     filenames = (d_file, k_file, h_file)
     print (filenames)

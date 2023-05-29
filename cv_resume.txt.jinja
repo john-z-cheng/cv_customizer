@@ -50,6 +50,21 @@ body {
 .cv_email {
     font-size:125%;
 }
+.cv_profile {
+    display: flex;
+}
+.cv_profile_network {
+    font-size:100%;
+    flex: 1;
+    text-align: right;
+    padding-right: 3ch;
+}
+.cv_profile_url {
+    font-size:100%;
+    flex: 1;
+    text-align: left;
+    padding-left: 0ch;
+}
 .cv_summary {
     margin-top: 1em;
 }
@@ -178,6 +193,14 @@ ul {
     <div class="cv_basics cv_phone">{{ basics.phone }}</div>
     {% endif %}
 </div>
+{% if basics.profiles|length %}
+{% for profile in basics.profiles %}
+<div class="cv_profile">
+<div class="cv_profile_network">{{ profile.network }}</div>
+<div class="cv_profile_url">{{profile.url}}</div>
+</div>
+{% endfor %}
+{% endif %}
 <div class="cv_summary">{{ basics.summary }}</div>
 <section>Experience</section>
 {% for stint in work %}

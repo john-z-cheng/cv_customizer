@@ -12,12 +12,16 @@
       "postalCode": "CA 94115",
       "city": "City",
       "countryCode": "US",
-      "region": "State"
+      "region": "State, 99999"
     },
     "profiles": [{
-      "network": "Twitter",
+      "network": "Github",
       "username": "anon",
-      "url": "https://twitter.com/anon"
+      "url": "https://github.com/anon"
+    },{
+      "network": "LinkedIn",
+      "username": "anon",
+      "url": "https://linkedin.com/anon"
     }]
   },
   "work": [{
@@ -27,18 +31,17 @@
     "url": "https://company.com",
     "startDate": "Jan 2018",
     "endDate": "Mar 2022",
-    "summaryX": "large enterprise focused on providing anonymous services",
+    "summary": "Member of team that quis lectus nulla at volutpat diam",
     "highlights": [
       { "highlight" : "Malesuada fames ac turpis egestas integer",
                       "subhighlights" : ["Pharetra et ultrices neque ornare",
                       "Maecenas vel odio nulla",
                       "Sed ut libero venenatis, vehicula mi non, molestie nis",
                       "Donec in sapien eu tellus porta viverra et id ligula"] },
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Semper quis lectus nulla at volutpat diam. Ac orci phasellus egestas tellus rutrum tellus.",{ "highlight" : "Malesuada fames ac turpis egestas integer",
-      "subhighlights" : ["Pharetra et ultrices neque ornare",
-      "Maecenas vel odio nulla",
-      "Sed ut libero venenatis, vehicula mi non, molestie nis",
-      "Donec in sapien eu tellus porta viverra et id ligula"] },
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ac orci phasellus egestas tellus rutrum tellus.",{ "highlight" : "Tempor incididunt ut labore et dolore magna aliqua",
+      "subhighlights" : ["Duis dignissim elit at euismod scelerisque",
+      "Ut ac mi sed velit aliquam auctor sed quis neque",
+      "Vehicula mi non, molestie nis donec in sapien eu tellus"] },
       "Elit pellentesque habitant morbi tristique senectus"
     ]
   },{
