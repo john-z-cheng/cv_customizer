@@ -1,5 +1,6 @@
 
 # write_cv_resume.py
+import argparse
 import re
 import sys
 import json
@@ -99,16 +100,16 @@ def write_resume(resume_data, html_filename):
         print(f"... wrote {html_filename}")
 
 def define_filenames():
-    root = "anon"
-    argc = len(sys.argv)
-    print (argc)
-    if argc > 1:
-        root = sys.argv[1]
-    if argc == 3:
-        kroot = sys.argv[2]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("root", nargs='?', default='anon', help="produce output using the file named data_for_<root>.txt")
+    parser.add_argument("-k", "--keywords", help="emphasize keywords in output using the file named keywords_for_<KEYWORDS>")
+    args = parser.parse_args()
+    argv = vars(args)
+    root = argv['root']
+    if argv['keywords']:
+        kroot = argv['keywords']
     else:
         kroot = root
-
     d_file = "data_for_" + root + ".json"
     k_file = "keywords_for_" + kroot + ".txt"
     h_file = root + "_resume.html"
@@ -117,6 +118,7 @@ def define_filenames():
     return filenames
 
 def main():
+
     d_file, k_file, h_file = define_filenames()
     raw_data = load_resume_data(d_file)
     keywords = load_keywords(k_file)
