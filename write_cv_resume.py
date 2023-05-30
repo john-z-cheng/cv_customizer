@@ -2,7 +2,6 @@
 # write_cv_resume.py
 import argparse
 import re
-import sys
 import json
 from jinja2 import Environment, FileSystemLoader
 
@@ -100,19 +99,23 @@ def write_resume(resume_data, html_filename):
         print(f"... wrote {html_filename}")
 
 def define_filenames():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(epilog='The value for KEYWORDS and OUTPUT will be the value assigned to root if not specified',
+                                    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("root", nargs='?', default='anon', help="produce output using the file named data_for_<root>.txt")
-    parser.add_argument("-k", "--keywords", help="emphasize keywords in output using the file named keywords_for_<KEYWORDS>")
+    parser.add_argument("-k", "--keywords", help="emphasize keywords in output using the file named keywords_for_<KEYWORDS>", default=argparse.SUPPRESS)
+    parser.add_argument("-o", "--output", help="name of output file as <OUTPUT>_resume.html", default=argparse.SUPPRESS)
     args = parser.parse_args()
     argv = vars(args)
     root = argv['root']
-    if argv['keywords']:
+    kroot = root
+    hroot = root
+    if argv.get('keywords'):
         kroot = argv['keywords']
-    else:
-        kroot = root
+    if argv.get('output'):
+        hroot = argv['output']
     d_file = "data_for_" + root + ".json"
     k_file = "keywords_for_" + kroot + ".txt"
-    h_file = root + "_resume.html"
+    h_file = hroot + "_resume.html"
     filenames = (d_file, k_file, h_file)
     print (filenames)
     return filenames
