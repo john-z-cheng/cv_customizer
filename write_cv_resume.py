@@ -7,12 +7,26 @@ from jinja2 import Environment, FileSystemLoader
 
 emphasized_attributes = ['summary','highlights','highlight','subhighlights','keywords']
 
+def include_this_match(keyword, excludes, v, match):
+    if len(excludes) == 0:
+        return True
+    for exclude in excludes:
+        print(exclude)
+        offset = exclude.find(keyword)
+        idx = match.start()
+        if idx < offset:
+            return False
+        else:
+            potential = v[idx-offset:len(exclude)].casefold()
+            if potential == exclude:
+                return False
+    # no exclusion found
+    return True
+
 def emphasize_any_keywords(v: str, keywords: list):
     replacement = ''
     match_qty = 0
-    for keyword in keywords:
-        if match_qty:
-            pass
+    for keyword, excludes in keywords:
         regex = rf"\b{keyword}\b"
         # keywords have already been casefolded but the value has not
         p = re.compile(regex, re.IGNORECASE)
@@ -20,8 +34,14 @@ def emphasize_any_keywords(v: str, keywords: list):
         left_idx = 0
         found = False
         for match in matches:
-            match_qty += 1
-            found = True
+            if len(excludes):
+                found = include_this_match(keyword, excludes, v, match)
+            else:
+                found = True
+            if found == True:
+                match_qty += 1
+            else:
+                continue
             right_idx = match.start()
             part_str = v[left_idx:right_idx] + '<b>'
             replacement = replacement + part_str
@@ -77,12 +97,29 @@ def load_resume_data(data_file):
     return raw_data
 
 def load_keywords(k_filename):
-    # keywords_list contains a keyword (or keyword phrase) on each line
+    """Each non-blank line in the file will start with a keyword (or phrase) that is
+    intended to be emphasized. Optionally, there can be a pipe character | and additional
+    strings that follow on that line for those keywords or phrases that should not be
+    emphasized (i.e. excluded). This allows a keyword like 'SQL' to be emphasized, but
+    'Microsoft SQL Server' would not have its middle word emphasized."""
+    # keywords will be filled with a list of tuples where the first item is a keyword string
+    # to be emphasized and the second item is a list of strings that should be excluded
+    # from emphasis.
     keywords = []
     try:
         with open(file=k_filename, mode="r") as keyword_file:
             for line in keyword_file:
-                if len(line.strip()): keywords.append(line.strip().casefold())
+                stripped_line = line.strip().casefold()
+                if len(stripped_line) == 0:
+                    continue
+                parts = stripped_line.split('|')
+                keyword = parts[0].strip()
+                if len(parts) > 1:
+                    excludes = list(map(str.strip, parts[1:]))
+                    print(excludes)
+                else:
+                    excludes = []
+                keywords.append((keyword,excludes))
     except (OSError):
         pass
     print ("Keywords to be emphasized:", keywords)
