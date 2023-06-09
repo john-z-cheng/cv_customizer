@@ -25,5 +25,15 @@ class TestEmphasisAnyKeywords(unittest.TestCase):
         res = write_cv_resume.emphasize_any_keywords(self.line,keywords)
         self.assertEqual("abc def ghi jkl mno pqr stu <b>vwxyz</b>", res)
 
+    def test_emphasize_two_words(self):
+        keywords = [('def',[]),('vwxyz',[])]
+        res = write_cv_resume.emphasize_any_keywords(self.line,keywords)
+        self.assertEqual("abc <b>def</b> ghi jkl mno pqr stu <b>vwxyz</b>", res)
+
+    def test_emphasize_two_words_reversed(self):
+        keywords = [('vwxyz',[]),('def',[])]
+        res = write_cv_resume.emphasize_any_keywords(self.line,keywords)
+        self.assertEqual("abc <b>def</b> ghi jkl mno pqr stu <b>vwxyz</b>", res)
+
 if __name__ == '__main__':
     unittest.main(verbosity=0)
