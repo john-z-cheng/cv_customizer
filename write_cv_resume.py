@@ -23,11 +23,26 @@ def include_this_match(keyword, excludes, v, match):
     # no exclusion found
     return True
 
+def get_regex_str(keyword):
+    # assign default regular expression for keyword
+    regex = rf"\b{keyword}\b"
+    # check for special characters in keyword
+    # support single period character at beginning or middle of word
+    pos = keyword.find('.')
+    if pos == 0:
+        newword = keyword[1:]
+        regex = rf"(?<!\S)\.{newword}\b"
+    if pos > 0:
+        lefthalf = keyword[0:pos]
+        righthalf = keyword[pos:]
+        regex = rf"\b{lefthalf}\{righthalf}\b"
+    return regex
+
 def emphasize_any_keywords(v: str, keywords: list):
     replacement = ''
     match_qty = 0
     for keyword, excludes in keywords:
-        regex = rf"\b{keyword}\b"
+        regex = get_regex_str(keyword)
         # keywords have already been casefolded but the value has not
         p = re.compile(regex, re.IGNORECASE)
         matches = p.finditer(v)
