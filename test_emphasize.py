@@ -11,6 +11,18 @@ class TestEmphasisAnyKeywords(unittest.TestCase):
         print(cls.line)
         print(cls.period_line)
 
+    def test_exclusion_slash(self):
+        slash_line = "something Python/Tkinter another"
+        keywords = [('python',["python/tkinter"])]
+        res = write_cv_resume.emphasize_any_keywords(slash_line, keywords)
+        self.assertEqual("", res)
+
+    def test_exclusion_start(self):
+        slash_line = "something AWS SDK (boto3), ruby on rails, AWS Serverless, more words"
+        keywords = [('aws',["aws sdk","aws serverless"])]
+        res = write_cv_resume.emphasize_any_keywords(slash_line, keywords)
+        self.assertEqual("", res)
+
     def test_emphasize_first_word(self):
         keywords = [('abc',[])]
         res = write_cv_resume.emphasize_any_keywords(self.line,keywords)

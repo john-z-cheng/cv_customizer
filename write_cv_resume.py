@@ -11,15 +11,24 @@ def include_this_match(keyword, excludes, v, match):
     if len(excludes) == 0:
         return True
     for exclude in excludes:
-        print(exclude)
+        # collect some character positions in strings needed by logic
         offset = exclude.find(keyword)
         idx = match.start()
+        exclude_len_after_key = len(exclude)-offset
+        value_len_after_key = len(v) - idx
+        # case where the keyword is inside the exclude phrase but the match
+        # indicates there are not enough characters preceding it to be equal
+        # exclude="zzz key zzz" and v="a key bbb ccc" (idx=2, offset=4)
         if idx < offset:
+            return True
+        # case where the exclude phrase is too long to possibly match
+        # exclude="zzz key zzz" and v="something zzz key d" (idx=10,offset=4)
+        if exclude_len_after_key > value_len_after_key:
+            return True
+        potential = v[idx-offset:idx-offset+len(exclude)].casefold()
+        if potential == exclude:
+            print("excluding: ", exclude)
             return False
-        else:
-            potential = v[idx-offset:len(exclude)].casefold()
-            if potential == exclude:
-                return False
     # no exclusion found
     return True
 
@@ -111,6 +120,19 @@ def load_resume_data(data_file):
         raw_data = json.load(data_file)
     return raw_data
 
+def parse_keywords_line(line):
+    stripped_line = line.strip().casefold()
+    if len(stripped_line) == 0:
+        return None
+    parts = stripped_line.split('|')
+    keyword = parts[0].strip()
+    if len(parts) > 1:
+        excludes = list(map(str.strip, parts[1:]))
+        print(excludes)
+    else:
+        excludes = []
+    return (keyword,excludes)
+
 def load_keywords(k_filename):
     """Each non-blank line in the file will start with a keyword (or phrase) that is
     intended to be emphasized. Optionally, there can be a pipe character | and additional
@@ -124,17 +146,9 @@ def load_keywords(k_filename):
     try:
         with open(file=k_filename, mode="r") as keyword_file:
             for line in keyword_file:
-                stripped_line = line.strip().casefold()
-                if len(stripped_line) == 0:
-                    continue
-                parts = stripped_line.split('|')
-                keyword = parts[0].strip()
-                if len(parts) > 1:
-                    excludes = list(map(str.strip, parts[1:]))
-                    print(excludes)
-                else:
-                    excludes = []
-                keywords.append((keyword,excludes))
+                key_tuple = parse_keywords_line(line)
+                if key_tuple != None:
+                    keywords.append(key_tuple)
     except (OSError):
         pass
     print ("Keywords to be emphasized:", keywords)
