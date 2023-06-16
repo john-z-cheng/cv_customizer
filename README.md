@@ -29,7 +29,7 @@ Execute the python script:
 python write_cv_resume.py
 ```
 
-There will be some printed output and a new file created (or overwritten if command is repeated):  **anon_resume.html**
+There will be some printed output and a new file created (or overwritten if command is repeated):  **anon_anon_resume.html**
 
 ## Usage
 
@@ -43,7 +43,7 @@ Assuming that the above two files are available, the command to run would be:
 ```
 $ python write_cv_resume.py yourname -k job
 ```
-and its output will be: *job_resume.html*
+and its output will be: **job_yourname_resume.html**
 
 ## Acknowledgments
 Thanks to the people/companies behind:

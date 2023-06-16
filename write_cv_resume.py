@@ -151,7 +151,7 @@ def write_resume(resume_data, html_filename):
         print(f"... wrote {html_filename}")
 
 def define_filenames():
-    parser = argparse.ArgumentParser(epilog='Any unspecified parameters will be assigned in a hierarchical manner such that the KEYWORDS value is the SOURCE value and the OUTPUT value is the KEYWORDS value.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(epilog='Unspecified parameters are assigned a value in a hierarchical manner such that the KEYWORDS value is the SOURCE value and the OUTPUT value combines the SOURCE and KEYWORDS value.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("SOURCE", nargs='?', default='anon', help="produce output using the source file named data_for_<SOURCE>.txt")
     parser.add_argument("-k", "--keywords", help="emphasize keywords in output using the file named keywords_for_<KEYWORDS>", default=argparse.SUPPRESS)
     parser.add_argument("-o", "--output", help="name of output file as <OUTPUT>_resume.html", default=argparse.SUPPRESS)
@@ -165,10 +165,13 @@ def define_filenames():
     if argv.get('output'):
         hroot = argv['output']
     else:
-        hroot = kroot
+        hroot = None
     d_file = "data_for_" + source + ".json"
     k_file = "keywords_for_" + kroot + ".txt"
-    h_file = hroot + "_resume.html"
+    if hroot:
+        h_file = hroot + "_resume.html"
+    else:
+        h_file = kroot + "_" + source + "_resume.html"
     filenames = (d_file, k_file, h_file)
     print (filenames)
     return filenames
