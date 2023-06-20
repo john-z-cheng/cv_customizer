@@ -11,52 +11,59 @@ class TestEmphasisAnyKeywords(unittest.TestCase):
         print(cls.line)
         print(cls.period_line)
 
+    def get_keywords(self, line):
+        """helper function to create the parameter needed for the test input"""
+        key_tuple = write_cv_resume.parse_keywords_line(line)
+        return [key_tuple]
+
     def test_exclusion_slash(self):
         slash_line = "something Python/Tkinter another"
-        keywords = [('python',["python/tkinter"])]
+        keywords = self.get_keywords('python|python/tkinter')
         res = write_cv_resume.emphasize_any_keywords(slash_line, keywords)
         self.assertEqual("", res)
 
     def test_exclusion_start(self):
         slash_line = "something AWS SDK (boto3), ruby on rails, AWS Serverless, more words"
-        keywords = [('aws',["aws sdk","aws serverless"])]
+        keywords = self.get_keywords('aws|aws sdk|aws serverless')
         res = write_cv_resume.emphasize_any_keywords(slash_line, keywords)
         self.assertEqual("", res)
 
     def test_emphasize_first_word(self):
-        keywords = [('abc',[])]
+        keywords = self.get_keywords('abc')
         res = write_cv_resume.emphasize_any_keywords(self.line,keywords)
         self.assertEqual("<b>abc</b> def ghi jkl mno pqr stu vwxyz", res)
 
     def test_emphasize_middle_word(self):
         """test that one keyword that is in middle of a line is emphasized
         with the HTML elements <b> and </b>"""
-        keywords = [('ghi',[])]
+        keywords = self.get_keywords('ghi')
         res = write_cv_resume.emphasize_any_keywords(self.line,keywords)
         self.assertEqual("abc def <b>ghi</b> jkl mno pqr stu vwxyz", res)
 
     def test_emphasize_last_word(self):
-        keywords = [('vwxyz',[])]
+        keywords = self.get_keywords('vwxyz')
         res = write_cv_resume.emphasize_any_keywords(self.line,keywords)
         self.assertEqual("abc def ghi jkl mno pqr stu <b>vwxyz</b>", res)
 
     def test_emphasize_two_words(self):
-        keywords = [('def',[]),('vwxyz',[])]
+        keywords = self.get_keywords('def')
+        keywords.extend(self.get_keywords('vwxyz'))
         res = write_cv_resume.emphasize_any_keywords(self.line,keywords)
         self.assertEqual("abc <b>def</b> ghi jkl mno pqr stu <b>vwxyz</b>", res)
 
     def test_emphasize_two_words_reversed(self):
-        keywords = [('vwxyz',[]),('def',[])]
+        keywords = self.get_keywords('vwxyz')
+        keywords.extend(self.get_keywords('def'))
         res = write_cv_resume.emphasize_any_keywords(self.line,keywords)
         self.assertEqual("abc <b>def</b> ghi jkl mno pqr stu <b>vwxyz</b>", res)
 
     def test_period_start_word(self):
-        keywords = [('.ghi',[])]
+        keywords = self.get_keywords('.ghi')
         res = write_cv_resume.emphasize_any_keywords(self.period_line,keywords)
         self.assertEqual(".abc def. <b>.ghi</b> jkl. mno", res)
 
     def test_period_middle_word(self):
-        keywords = [('g.hi',[])]
+        keywords = self.get_keywords('g.hi')
         input_line =  ".abc def. g.hi jal. map"
         res = write_cv_resume.emphasize_any_keywords(input_line,keywords)
         self.assertEqual(".abc def. <b>g.hi</b> jal. map", res)
@@ -64,7 +71,7 @@ class TestEmphasisAnyKeywords(unittest.TestCase):
     def test_period_middle_word_no_match(self):
         """Tests that the period in keyword is not treated as any character in regex so
         there should not be a match and the returned result is empty string"""
-        keywords = [('g.hi',[])]
+        keywords = self.get_keywords('g.hi')
         input_line =  ".abc def. gAhi jal. map"
         res = write_cv_resume.emphasize_any_keywords(input_line,keywords)
         self.assertEqual("", res)
