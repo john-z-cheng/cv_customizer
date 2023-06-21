@@ -35,16 +35,38 @@ def include_this_match(keyword, excludes, v, match):
 def get_regex_str(keyword):
     # assign default regular expression for keyword
     regex = rf"\b{keyword}\b"
+
     # check for special characters in keyword
+    last_char = len(keyword) - 1
+
     # support single period character at beginning or middle of word
+    # Example: ".Net"
     pos = keyword.find('.')
-    if pos == 0:
-        newword = keyword[1:]
-        regex = rf"(?<!\S)\.{newword}\b"
-    if pos > 0:
-        lefthalf = keyword[0:pos]
-        righthalf = keyword[pos:]
-        regex = rf"\b{lefthalf}\{righthalf}\b"
+    if pos >= 0:
+        if pos == 0:
+            newword = keyword[1:]
+            regex = rf"(?<!\S)\.{newword}\b"
+        elif pos > 0:
+            lefthalf = keyword[0:pos]
+            righthalf = keyword[pos:]
+            regex = rf"\b{lefthalf}\{righthalf}\b"
+    # support one or two plus characters at end of keyword
+    # Example: "CompTIA A+" or "C++""
+    pos = keyword.find('+')
+    if pos >= 0:
+        if pos == 0:
+            newword = keyword[1:]
+            regex = rf"(?<!\S)\+{newword}\b"
+        elif pos == last_char:
+            lefthalf = keyword[0:pos]
+            regex = rf"\b{lefthalf}\+(?!\S)"
+        elif pos == last_char - 1 and keyword[last_char] == '+':
+            lefthalf = keyword[0:pos]
+            regex = rf"\b{lefthalf}\+\+(?!\S)"
+        else:
+            lefthalf = keyword[0:pos]
+            righthalf = keyword[pos:]
+            regex = rf"\b{lefthalf}\{righthalf}\b"
     return regex
 
 def emphasize_any_keywords(v: str, keywords: list):
@@ -122,10 +144,18 @@ def load_resume_data(data_file):
 
 def parse_keywords_line(line):
     stripped_line = line.strip().casefold()
+    # Exclude blank line
     if len(stripped_line) == 0:
+        return None
+    # Exclude keyword that ends with a period
+    last_char = len(stripped_line) - 1
+    if stripped_line[last_char] == '.':
         return None
     parts = stripped_line.split('|')
     keyword = parts[0].strip()
+    # Exclude keyword that is 1 character long
+    if len(keyword) == 1:
+        return None
     if len(parts) > 1:
         excludes = list(map(str.strip, parts[1:]))
         print(excludes)

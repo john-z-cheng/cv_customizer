@@ -57,25 +57,38 @@ class TestEmphasisAnyKeywords(unittest.TestCase):
         res = write_cv_resume.emphasize_any_keywords(self.line,keywords)
         self.assertEqual("abc <b>def</b> ghi jkl mno pqr stu <b>vwxyz</b>", res)
 
-    def test_period_start_word(self):
+    def test_period_in_keyword(self):
+        # at start of keyword
         keywords = self.get_keywords('.ghi')
         res = write_cv_resume.emphasize_any_keywords(self.period_line,keywords)
         self.assertEqual(".abc def. <b>.ghi</b> jkl. mno", res)
-
-    def test_period_middle_word(self):
+        # in middle of keyword
         keywords = self.get_keywords('g.hi')
         input_line =  ".abc def. g.hi jal. map"
         res = write_cv_resume.emphasize_any_keywords(input_line,keywords)
         self.assertEqual(".abc def. <b>g.hi</b> jal. map", res)
-
-    def test_period_middle_word_no_match(self):
-        """Tests that the period in keyword is not treated as any character in regex so
-        there should not be a match and the returned result is empty string"""
+        # in middle of keyword without match
         keywords = self.get_keywords('g.hi')
         input_line =  ".abc def. gAhi jal. map"
         res = write_cv_resume.emphasize_any_keywords(input_line,keywords)
         self.assertEqual("", res)
 
+    def test_plus_sign_in_keyword(self):
+        # single plus sign at end
+        keywords = self.get_keywords('CompTIA A+')
+        input_line = "Certified with CompTIA A+ and AWS"
+        res = write_cv_resume.emphasize_any_keywords(input_line,keywords)
+        self.assertEqual("Certified with <b>CompTIA A+</b> and AWS", res)
+        # double plus sign at end
+        keywords = self.get_keywords('C++')
+        input_line = "Programming C++ for 5+ years"
+        res = write_cv_resume.emphasize_any_keywords(input_line,keywords)
+        self.assertEqual("Programming <b>C++</b> for 5+ years", res)
+        # double plus sign with exclusion
+        keywords = self.get_keywords('C++|C/C++')
+        input_line = "Programming Languages: C/C++, Java, Python"
+        res = write_cv_resume.emphasize_any_keywords(input_line,keywords)
+        self.assertEqual("", res)
 
 if __name__ == '__main__':
     unittest.main(verbosity=0)
