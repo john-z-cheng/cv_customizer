@@ -57,6 +57,12 @@ class TestEmphasisAnyKeywords(unittest.TestCase):
         res = write_cv_resume.emphasize_any_keywords(self.line,keywords)
         self.assertEqual("abc <b>def</b> ghi jkl mno pqr stu <b>vwxyz</b>", res)
 
+    def test_slash_in_keyword(self):
+        keywords = self.get_keywords('b/net')
+        input_line =  ".abc def. g.hi b/net"
+        res = write_cv_resume.emphasize_any_keywords(input_line,keywords)
+        self.assertEqual(".abc def. g.hi <b>b/net</b>", res)
+
     def test_period_in_keyword(self):
         # at start of keyword
         keywords = self.get_keywords('.ghi')
