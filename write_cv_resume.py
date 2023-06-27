@@ -147,6 +147,9 @@ def parse_keywords_line(line):
     # Exclude blank line
     if len(stripped_line) == 0:
         return None
+    # exclude comment lines that begin with double slash or double dash
+    if stripped_line.startswith("//") or stripped_line.startswith("--"):
+        return None
     # Exclude keyword that ends with a period
     last_char = len(stripped_line) - 1
     if stripped_line[last_char] == '.':
