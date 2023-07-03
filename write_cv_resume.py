@@ -190,7 +190,9 @@ def load_keywords(k_filename):
 def write_resume(resume_data, html_filename):
     environment = Environment(loader=FileSystemLoader("."))
     template = environment.get_template("cv_resume.txt.jinja")
-
+    # hack to get the prefix of html_filename and set it as the document.title
+    prefix = html_filename[0:html_filename.index("_resume.html")]
+    resume_data["document"]["title"] = prefix
     content = template.render(resume_data)
     with open(html_filename, mode="w", encoding="utf-8") as message:
         environment.parse(template)
