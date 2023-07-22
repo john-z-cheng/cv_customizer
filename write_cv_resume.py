@@ -187,9 +187,9 @@ def load_keywords(k_filename):
     print ("Keywords to be emphasized:", keywords)
     return keywords
 
-def write_resume(resume_data, html_filename):
+def write_resume(resume_data, html_filename, t_file):
     environment = Environment(loader=FileSystemLoader("."))
-    template = environment.get_template("cv_resume.txt.jinja")
+    template = environment.get_template(t_file)
     # hack to get the prefix of html_filename and set it as the document.title
     prefix = html_filename[0:html_filename.index("_resume.html")]
     resume_data["document"]["title"] = prefix
@@ -202,8 +202,10 @@ def write_resume(resume_data, html_filename):
 def define_filenames():
     parser = argparse.ArgumentParser(epilog='Unspecified parameters are assigned a value in a hierarchical manner such that the KEYWORDS value is the SOURCE value and the OUTPUT value combines the SOURCE and KEYWORDS value.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("SOURCE", nargs='?', default='anon', help="produce output using the source file named data_for_<SOURCE>.txt")
-    parser.add_argument("-k", "--keywords", help="emphasize keywords in output using the file named keywords_for_<KEYWORDS>", default=argparse.SUPPRESS)
-    parser.add_argument("-o", "--output", help="name of output file as <OUTPUT>_resume.html", default=argparse.SUPPRESS)
+    parser.add_argument("-k", "--keywords", help="emphasize keywords in output using the file named keywords_for_<KEYWORDS>.txt", default=argparse.SUPPRESS)
+    parser.add_argument("-o", "--output", help="prefix of output file as <OUTPUT>_resume.html", default=argparse.SUPPRESS)
+    parser.add_argument("-t", "--template", help="prefix of template file as <TEMPLATE>.jinja", default='cv_resume.txt')
+
     args = parser.parse_args()
     argv = vars(args)
     source = argv['SOURCE']
@@ -221,17 +223,20 @@ def define_filenames():
         h_file = hroot + "_resume.html"
     else:
         h_file = kroot + "_" + source + "_resume.html"
-    filenames = (d_file, k_file, h_file)
+    if argv.get('template'):
+        troot = argv['template']
+        t_file = troot + '.jinja'
+    filenames = (d_file, k_file, h_file, t_file)
     print (filenames)
     return filenames
 
 def main():
 
-    d_file, k_file, h_file = define_filenames()
+    d_file, k_file, h_file, t_file = define_filenames()
     raw_data = load_resume_data(d_file)
     keywords = load_keywords(k_file)
     resume_data = dict_emphasize_keywords(raw_data, keywords)
-    write_resume(resume_data, h_file)
+    write_resume(resume_data, h_file, t_file)
 
 if __name__ == "__main__":
     main()

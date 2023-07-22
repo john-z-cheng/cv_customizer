@@ -1,5 +1,10 @@
+# Local keywords files except for default
+keywords_for_*.txt
+!keywords_for_anon.txt
+
 # HTML Output
 *.html
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -23,6 +23,7 @@ $ pip install -U Jinja2
 To confirm that the basic functionality is working, there are some default files:
 - data_for_anon.json
 - keywords_for_anon.txt
+- cv_resume.txt.jinja
 
 Execute the python script:
 ```
@@ -34,7 +35,7 @@ There will be some printed output and a new file created (or overwritten if comm
 ## Usage
 
 The python script relies on file naming convention to reduce typing command line arguments.
-Basic description of the arguments is provided with the **-h** flag.
+A basic description of the arguments is provided with the **-h** flag.
 
 Make a copy of data_for_anon.json with a name like "data_for_\<yourname\>.json" which you can then edit with the actual text that you will want in your resumé. This file's data schema was copied and somewhat modified from https://jsonresume.org, so not everything in it is necessarily included in the final output. The biggest difference is support for a second level of highlights (bullet points).
 The other file needed should have a name like "keywords_for_\<job\>.txt" to contain those keywords (or phrases) that should be bolded in the HTML output.
